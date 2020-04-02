@@ -1,83 +1,86 @@
+//////////////////////////////////////////////////////////////
+///
+///Class:		Pi2
+///Description:
+///
+#pragma once
 
-#ifndef PI2_h
-#define PI2_h
 
-#include "FinalState.h"
-#include "THSParticle.h"
-#include "CLAS12Trigger.h"
-#include "CLAS12DeltaTime.h"
+#include "CLAS12FinalState.h"
+#include "CLAS12Particle.h"
+
 #include "TreeDataPi2.h"
-#include "mesonex_trigger.h"
-#include <vector>
-
-class TreeDataPi2;
-
-class Pi2 : public HS::FinalState{
-
- public :
-  Pi2(TString pid="NONE",TString inc="ALL");
-  virtual ~Pi2()=default;
 
 
+namespace adamt{
 
-  void FileStart() final;
-  Bool_t  CheckParticle(HS::THSParticle* part) final;
-  void FinalStateOutTree(HS::ttree_ptr tree) final;
-  void Kinematics() final;
-  void UserPostTopo() final;
+  using Particle=chanser::CLAS12Particle;
+
+  class Pi2 : public chanser::CLAS12FinalState{
+
+       
+  public :
+    Pi2()=default;
+      
+   TString GetUSER() final {return _USER;};
+ 
+    //create an instance of the class
+    static std::unique_ptr<Pi2> Make(TString ch,TString inc) {
+      return std::unique_ptr<Pi2>{new Pi2{ch,inc}};
+    }
+    //create an instance of the treedata, should be used to init unique_ptr
+    chanser::base_outevt_uptr TreeDataFactory() final {
+      return chanser::base_outevt_uptr{new TreeDataPi2{}};
+    }
+    void SetOutEvent(BaseOutEvent* out) final{
+      TD=static_cast<TreeDataPi2*>(out);
+    }
   
-  //Init functions
-  void Init_Iter0();
-  void Init_Iter1();
-  void Init_Iter2();
-  void Init_Iter3();
-   //Topology action functions
-  void Topo_0();
-  void Topo_1();
-  void Topo_2();
-  void Topo_3();
+    ~Pi2() final =default;
 
-  //Topology action functions
-
-  //Configuation Options
-  //set this to which particles you want to id via pdg code alone,
-  //"NONE" => only use charge info for PID
-  //"ALL" => only use particle PDG() values
-  //"e-:proton" => use PDG() for electrons and protons, charge for rest
-  void SetPID(TString pid){fPID=pid;};
-  //Set which particles you want to have any number detected
-  // "ALL"=> completely inclusive
-  //"e-" => inclusive of any number of e-, exact matches for others
-  void SetInclusive(TString inc){fINCLUSIVE=inc;};
-
-  HS::TreeData* GetTreeData() final{return &TD;}
-
+    void Define() final;
+      
+    BaseOutEvent* GetOutEvent() noexcept final{return TD;}
+      
   protected :
-
+    void Kinematics() final;
+    void UserProcess() final;
+      
+      
+   
   private:
-  HS::CLAS12::CLAS12Trigger fTrigger;//For CLAS12 trigger info
-  HS::CLAS12::CLAS12DeltaTime fCuts; //For particle cuts
-  std::unique_ptr<clas12::mesonex_trigger> fMTrigger;  //clas12root mesonex trigger code
+    //constructor private so only create unique_ptr
+    //using Pi2::Make(...)
+    //auto fs = adamt::Pi2::Make("NONE","ALL");
+  Pi2(TString ch,TString inc) : chanser::CLAS12FinalState(std::move(ch),std::move(inc)){
+      //Give object class name - namespace
+      //Used for compiling and loading
+      SetName(chanser::Archive::BareClassName(ClassName()));
+      Define();
+    }
 
-  //Initial state
-  HS::HSLorentzVector fBeam=HS::HSLorentzVector(0,0,10.6,10.6);
-  HS::HSLorentzVector fTarget=HS::HSLorentzVector(0,0,0,0.938272);
+    //Final Particles Detected
+    Particle   _electron = Particle{"e-"};//!
+    Particle   _proton = Particle{"proton"};//!
+    Particle   _pip = Particle{"pi+"};//!
+    Particle   _pim = Particle{"pi-"};//!
+    //chanser::CLAS12Particle _PARTICLE=BaseParticle("PDG");//!
+    
+    //Final Parents
 
-  //Final Particles Detected
-  HS::THSParticle fElectron=HS::THSParticle("e-");
-  HS::THSParticle fProton=HS::THSParticle("proton");
-  HS::THSParticle fPip=HS::THSParticle("pi+");
-  HS::THSParticle fPim=HS::THSParticle("pi-");
- 
-  //Final Parents
- 
-  //Tree Output Data
-  TreeDataPi2 TD;
 
-  //Topology Configuration options
-  TString fPID={"NONE"}; //NONE=>No PIDs 
-  TString fINCLUSIVE={"ALL"}; //ALL=> any number of all particle types
+    //Initial state
+    HSLorentzVector _beam{0,0,10.6,10.6};//!
+    HSLorentzVector _target{0,0,0,0.938272};//!
 
-};
 
-#endif //ifdef Pi2
+    //Tree Output Data
+    TreeDataPi2* TD{nullptr};//!;
+
+   
+    
+    const TString _USER="adamt";
+    ClassDefOverride(adamt::Pi2,1); //class Pi2
+  }; //end Pi2
+  
+}
