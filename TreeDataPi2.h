@@ -21,12 +21,13 @@ class TreeDataPi2: public HS::TreeData{
   Double_t MissMasspY=0;
   Double_t MissMasspZ=0;
   
-  //trigger bit data
+  //trigger related
   Double_t TriggerElectron=0;
   Double_t TriggerMesonex=0;
   Double_t Trigger24=0;
   Double_t TriggerFT2C=0;
   Double_t TriggerFT100=0;
+  Double_t TriggerSim=0;
 
   Double_t TriggerFDSectors=0;
   Double_t TriggerTotalEnergyFT=0;

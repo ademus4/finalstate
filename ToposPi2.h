@@ -2,10 +2,6 @@
 void Pi2::Topo_0(){
   //For topology Electron:Proton:Pip:Pim
 
-  cout<<"Mesonex trigger"<<endl;
-  cout<<fMTrigger->fire()<<endl;
-  cout<<endl;
-
   //if(fElectron.Detector()>0) {fGoodEvent=kFALSE;return;} //Put some cuts on particle detectors etc...
   //Define starttime from electron candidate
   fTrigger.StartTime(&fElectron);

@@ -11,6 +11,9 @@ void Pi2::Kinematics(){
 
   TD.TriggerFDSectors=fTrigger.CheckSectorsFD(frDetParts);
   TD.TriggerTotalEnergyFT=fTrigger.GetTotalEnergyFT(frDetParts);
+
+  //simulated mesonex trigger
+  //TD.TriggerSim=fMTrigger->fire();
   
   //Calculate possible resonances
   HSLorentzVector pMeson=fPip.P4()+fPim.P4();

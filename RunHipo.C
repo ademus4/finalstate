@@ -3,10 +3,19 @@ int RunHipo(char * inputFilename,
 	     string ptreeDir,
 	     int nEvents=1000){
   // need to run LoadPi2 first to get libraries
-  Pi2 fs("","ALL"); //string arguments => PID, INCLUSIVE  ("NONE", "ALL") own PID
+  //string arguments => PID, INCLUSIVE  ("NONE", "ALL")=own PID, ("ALL" ,"ALL")=event builder
+  //pi2("","ALL"); => Use Pid (from RECFT) and have no limit on the number of tracks per event (i.e. ALL)
+  Pi2 fs("ALL" ,"ALL"); // PID, INCLUSIVE
 
   //output
   fs.CreateFinalTree("FinalTree",outputFilename);
+
+  //add some cuts
+  auto cutsman=make_shared<ParticleCutsManager>();
+  auto eCut=make_shared<CLAS12DeltaTime>(10,10,0,0); //FT,FD,CD,??
+  cutsman->AddParticleCut("e-",eCut); //assign to manager
+  cutsman->ConfigureCuts(&fs);   
+  fs.RegisterPostTopoAction(cutsman);
 
   auto treeman=make_shared<ParticleDataManager>(ptreeDir);
   treeman->ConfigureTreeParticles(&fs); //propogate through topologies

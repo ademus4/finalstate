@@ -74,11 +74,9 @@ class Pi2 : public HS::FinalState{
   //Tree Output Data
   TreeDataPi2 TD;
 
- 
   //Topology Configuration options
   TString fPID={"NONE"}; //NONE=>No PIDs 
-  TString  fINCLUSIVE={"ALL"}; //ALL=> any number of all particle types
-
+  TString fINCLUSIVE={"ALL"}; //ALL=> any number of all particle types
 
 };
 

@@ -13,7 +13,7 @@ def main(args):
     # iterate through the given input files
     for item in args['filenames']:
         _, fname = os.path.split(item)
-        folder = fname.split('.')[0]
+        folder = fname.replace('.hipo', '')
         outputdir = os.path.join(args['output'], folder)
         print('Processing run: {}'.format(item))
 
@@ -47,6 +47,5 @@ if __name__ == "__main__":
                         required=False,
                         type=int,
                         default=1000000000)
-
     args = vars(parser.parse_args())
     main(args)

@@ -69,7 +69,7 @@ void Pi2::FileStart(){
   //fTrigger.SetSTimePeak(125.45);
 
   //getting the mesonex trigger
-  fMTrigger.reset(new clas12::mesonex_trigger(dynamic_cast<HS::CLAS12::HipoToolsReader*>(fData.get())->GetHipoReader()));
+  //fMTrigger.reset(new clas12::mesonex_trigger(dynamic_cast<HS::CLAS12::HipoToolsReader*>(fData.get())->GetHipoReader()));
 }
 ///Will be called after the Topo_ functions
 ///And before PostTopoManager
