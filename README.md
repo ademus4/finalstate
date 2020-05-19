@@ -1,2 +1,2 @@
 # finalstate
-All code related to HASPECT final-state processing goes here
+All code related to Chanser final-state processing goes here
