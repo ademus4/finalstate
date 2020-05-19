@@ -10,9 +10,9 @@
 
   /////Make particle trees first in case want to add cut flags
   ParticleDataManager pdm{"particle",1};
-  CLAS12ParticleOutEvent0 pout;  // careful here!
-  pdm.SetParticleOut(pout);
-  FS->RegisterPostTopoAction(pdm);
+  pdm.SetParticleOut(new CLAS12ParticleOutEvent0);
+  FS->RegisterPostKinAction(pdm);
+
 
   ///start time
   StartTimeAction st("StartTime",new C12StartTimeFromParticle("Electron"));

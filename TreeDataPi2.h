@@ -16,7 +16,23 @@ namespace adamt{
     //data member for tree branches below here
     Double_t MissMass2=0;
     Double_t MissMass=0;
-    Double_t MissMassE=0;
+    Double_t MissE=0;
+    Double_t MissP=0;
+    
+    Double_t MissMass2nP=0;
+    Double_t MissMassnP=0;
+    Double_t MissEnP=0;
+    Double_t MissPnP=0;
+
+    Double_t MissMass2nPim=0;
+    Double_t MissMassnPim=0;
+    Double_t MissEnPim=0;
+    Double_t MissPnPim=0;
+
+    Double_t MissMass2nPip=0;
+    Double_t MissMassnPip=0;
+    Double_t MissEnPip=0;
+    Double_t MissPnPip=0;
     
     //trigger related
     Double_t TriggerElectron=0;

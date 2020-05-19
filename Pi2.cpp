@@ -54,45 +54,37 @@ namespace adamt{
     _doToTopo["Electron:Proton:Pip"]=[&](){
       //TOPOLOGY Define your topology dedendent code in here
       ///////+++++++++++++++++++++++++++++++++++///////
-      auto startime=StartTimeFromEB();
-      for(auto& p:CurrentTopo()->GetParticles()){
-	p->ShiftTime(-startime);
-      }
+
+      if(_electron.CLAS12()->getRegion()!=1000){RejectEvent(); return;}
       
       auto miss= _beam + _target - _electron.P4() - _proton.P4() - _pip.P4();
       TD->MissMass2=miss.M2();    
       TD->MissMass =miss.M();
-      TD->MissMassE=miss.E();
+      TD->MissE=miss.E();
       _pim.FixP4(miss);
       ///////------------------------------------///////
     };
     _doToTopo["Electron:Proton:Pim"]=[&](){
       //TOPOLOGY Define your topology dedendent code in here
       ///////+++++++++++++++++++++++++++++++++++///////
-      auto startime=StartTimeFromEB();
-      for(auto& p:CurrentTopo()->GetParticles()){
-	p->ShiftTime(-startime);
-      }
+      if(_electron.CLAS12()->getRegion()!=1000){RejectEvent(); return;}
 
       auto miss= _beam + _target - _electron.P4() - _proton.P4() - _pim.P4();
       TD->MissMass2=miss.M2();    
       TD->MissMass =miss.M();
-      TD->MissMassE=miss.E();
+      TD->MissE=miss.E();
       _pip.FixP4(miss);
       ///////------------------------------------///////
     };
     _doToTopo["Electron:Pip:Pim"]=[&](){
       //TOPOLOGY Define your topology dedendent code in here
       ///////+++++++++++++++++++++++++++++++++++///////
-      auto startime=StartTimeFromEB();
-      for(auto& p:CurrentTopo()->GetParticles()){
-	p->ShiftTime(-startime);
-      }
+      if(_electron.CLAS12()->getRegion()!=1000){RejectEvent(); return;}
 
       auto miss= _beam + _target - _electron.P4() - _pip.P4() - _pim.P4();
       TD->MissMass2=miss.M2();    
       TD->MissMass =miss.M();
-      TD->MissMassE=miss.E();
+      TD->MissE=miss.E();
       _proton.FixP4(miss);
       ///////------------------------------------///////
     };
