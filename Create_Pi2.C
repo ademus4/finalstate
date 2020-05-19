@@ -10,12 +10,21 @@
 
   /////Make particle trees first in case want to add cut flags
   ParticleDataManager pdm{"particle",1};
-  CLAS12ParticleOutEvent pout;
+  CLAS12ParticleOutEvent0 pout;  // careful here!
   pdm.SetParticleOut(pout);
   FS->RegisterPostTopoAction(pdm);
 
+  ///start time
+  StartTimeAction st("StartTime",new C12StartTimeFromParticle("Electron"));
+  FS->RegisterPreTopoAction(st);
+
+  //FT electron energy correction
+  ParticleCorrectionManager pcorrm{"FTelEnergyCorrection"};
+  pcorrm.AddParticle("e-",new FTel_pol4_ECorrection());
+  FS->RegisterPreTopoAction(pcorrm);
+
   //write out config
-  FS->WriteToFile("config_allall.root");
+  FS->WriteToFile("config_allall_ecorr.root");
 
   //Delete the final state rather than let ROOT try
   FS.reset();

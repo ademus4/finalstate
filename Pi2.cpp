@@ -19,16 +19,36 @@ namespace adamt{
     //Set Possible Topologies
     _doToTopo["Electron:Proton:Pip:Pim"]=[&](){
       //TOPOLOGY Define your topology dedendent code in here
-      ///////+++++++++++++++++++++++++++++++++++///////      
-      auto startime=StartTimeFromEB();
-      for(auto& p:CurrentTopo()->GetParticles()){
-	p->ShiftTime(-startime);
-      }
+      ///////+++++++++++++++++++++++++++++++++++///////
 
+      //only events with FT electrons
+      if(_electron.CLAS12()->getRegion()!=1000){RejectEvent(); return;}
+
+      //calc for the diff combinations (missing parts)
       auto miss= _beam + _target - _electron.P4() - _proton.P4() - _pip.P4() - _pim.P4();
       TD->MissMass2=miss.M2();    
       TD->MissMass =miss.M();
-      TD->MissMassE=miss.E();
+      TD->MissE    =miss.E();
+      TD->MissP    =miss.P();
+
+      auto missp= _beam + _target - _electron.P4() - _pip.P4() - _pim.P4();
+      TD->MissMass2nP =missp.M2();
+      TD->MissMassnP  =missp.M()
+      TD->MissEnP     =missp.E();
+      TD->MissPnP     =missp.P();
+
+      auto misspim= _beam + _target - _electron.P4() - _proton.P4() - _pip.P4();
+      TD->MissMass2nPim =misspim.M2();
+      TD->MissMassnPim  =misspim.M()
+      TD->MissEnPim     =misspim.E();
+      TD->MissPnPim     =misspim.P();
+
+      auto misspip= _beam + _target - _electron.P4() - _proton.P4() - _pim.P4();
+      TD->MissMass2nPip =misspip.M2();
+      TD->MissMassnPip  =misspip.M()
+      TD->MissEnPip     =misspip.E();
+      TD->MissPnPip     =misspip.P();
+
       ///////------------------------------------///////
     };
     _doToTopo["Electron:Proton:Pip"]=[&](){
