@@ -3,7 +3,8 @@ int Run_Pi2(char * inputFilename,
 	    string outputDir){
   ////Set hipo file to be analysed
   HipoData hdata;
-  hdata.SetFile(inputFilename);  // 
+  hdata.SetFile(inputFilename); 
+  hdata.Reader()->useFTBased();
 
   ////create FinalStateManager
   FinalStateManager fsm;

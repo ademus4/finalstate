@@ -1,5 +1,5 @@
 {
-  auto FS = adamt::Pi2::Make("ALL","ALL");
+  auto FS = adamt::Pi2::Make("NONE","ALL");
   FS->AddTopology("Electron:Proton:Pip:Pim");
   FS->AddTopology("Electron:Proton:Pim");
   FS->AddTopology("Electron:Proton:Pip");
@@ -12,7 +12,6 @@
   ParticleDataManager pdm{"particle",1};
   pdm.SetParticleOut(new CLAS12ParticleOutEvent0);
   FS->RegisterPostKinAction(pdm);
-
 
   ///start time
   StartTimeAction st("StartTime",new C12StartTimeFromParticle("Electron"));
