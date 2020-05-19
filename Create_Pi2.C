@@ -23,7 +23,7 @@
   FS->RegisterPreTopoAction(pcorrm);
 
   //write out config
-  FS->WriteToFile("config_allall_ecorr.root");
+  FS->WriteToFile("config_noneall_ecorr.root");
 
   //Delete the final state rather than let ROOT try
   FS.reset();
