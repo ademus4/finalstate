@@ -33,19 +33,19 @@ namespace adamt{
 
       auto missp= _beam + _target - _electron.P4() - _pip.P4() - _pim.P4();
       TD->MissMass2nP =missp.M2();
-      TD->MissMassnP  =missp.M()
+      TD->MissMassnP  =missp.M();
       TD->MissEnP     =missp.E();
       TD->MissPnP     =missp.P();
 
       auto misspim= _beam + _target - _electron.P4() - _proton.P4() - _pip.P4();
       TD->MissMass2nPim =misspim.M2();
-      TD->MissMassnPim  =misspim.M()
+      TD->MissMassnPim  =misspim.M();
       TD->MissEnPim     =misspim.E();
       TD->MissPnPim     =misspim.P();
 
       auto misspip= _beam + _target - _electron.P4() - _proton.P4() - _pim.P4();
       TD->MissMass2nPip =misspip.M2();
-      TD->MissMassnPip  =misspip.M()
+      TD->MissMassnPip  =misspip.M();
       TD->MissEnPip     =misspip.E();
       TD->MissPnPip     =misspip.P();
 
